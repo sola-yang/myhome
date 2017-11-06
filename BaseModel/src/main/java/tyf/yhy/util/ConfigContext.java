@@ -10,19 +10,19 @@ import java.util.Map;
 * 
 */
 public final class ConfigContext {
-    public static final Map<Integer,String> sexMap=getSexMap();
-    public static final Map<Integer,String> familyRoleMap=getFamilyRoleMap();
-    public static Map<Integer,String> getSexMap(){
-    	Map<Integer,String> map=new HashMap<Integer,String>();
-    	map.put(0,"man");
-    	map.put(1,"woman");
+    public static final Map<Character,String> sexMap=getSexMap();
+    public static final Map<Character,String> familyRoleMap=getFamilyRoleMap();
+    public static Map<Character,String> getSexMap(){
+    	Map<Character,String> map=new HashMap<Character,String>();
+    	map.put('0',"man");
+    	map.put('1',"woman");
     	return map;
     }
-    public static Map<Integer,String> getFamilyRoleMap(){
-    	Map<Integer,String> map=new HashMap<Integer,String>();
-    	map.put(0,"father");
-    	map.put(1,"mother");
-    	map.put(2,"child");
+    public static Map<Character,String> getFamilyRoleMap(){
+    	Map<Character,String> map=new HashMap<Character,String>();
+    	map.put('0',"father");
+    	map.put('1',"mother");
+    	map.put('2',"child");
     	return map;
     }
 }
