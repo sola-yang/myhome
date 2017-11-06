@@ -17,11 +17,11 @@ public class FamilyMember extends Id {
    
 	private String familyMember;
 	private String familyId;
-	private Integer familyMemberRole;//0 represent father 1 represent mother 2 represent child
-	public Integer getFamilyMemberRole() {
+	private char familyMemberRole;//0 represent father 1 represent mother 2 represent child
+	public char getFamilyMemberRole() {
 		return familyMemberRole;
 	}
-	public void setFamilyMemberRole(Integer familyMemberRole) {
+	public void setFamilyMemberRole(char familyMemberRole) {
 		this.familyMemberRole = familyMemberRole;
 	}
 	public String getFamilyMember() {
