@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tyf.yhy.user.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="tyf.yhy.usermanager.entity.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_password" property="password" jdbcType="VARCHAR" />
+    <result column="user_sex" property="sex" jdbcType="CHAR" />
+    <result column="user_address" property="address" jdbcType="VARCHAR" />
+    <result column="user_phonenum" property="phoneNum" jdbcType="VARCHAR" />
+    <result column="user_email" property="email" jdbcType="VARCHAR" />
+    <result column="user_qqcount" property="qqCount" jdbcType="VARCHAR" />
+    <result column="user_wechart" property="weChartCount" jdbcType="VARCHAR" />
+    <result column="user_create_time" property="timeCreate" jdbcType="VARCHAR" />
+    <result column="user_modifed_time" property="timeModifed" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id,user_id, user_name, user_password, user_sex, user_address, user_phonenum, user_email, user_qqcount,user_wechart,user_create_time,user_modifed_time
+  </sql>
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_id = #{userId}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+     select 
+    <include refid="Base_Column_List" />
+    from user
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from user
+    where id in
+     <foreach collection="ids" open="(" close=")" item="id" separator=",">
+                    #{id}
+     </foreach>
+      </delete>
+  <insert id="insert" parameterType="tyf.yhy.usermanager.entity.User" >
+    insert into user (user_id, user_name, user_password, user_sex, user_address, user_phonenum, user_email, user_qqcount,user_wechart,user_create_time,user_modifed_time)
+    values (#{userId}, #{userName}, #{password}, #{sex}, #{address}, #{phoneNum}, #{email}, #{qqCount},#{weChartCount},#{timeCreate},#{timeModifed})
+  </insert>
+  <update id="update" parameterType="tyf.yhy.usermanager.entity.User" >
+    update user
+    <set >
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

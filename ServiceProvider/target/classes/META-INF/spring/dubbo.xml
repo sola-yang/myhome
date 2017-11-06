@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	  xsi:schemaLocation="http://www.springframework.org/schema/beans  
+            http://www.springframework.org/schema/beans/spring-beans.xsd  
+            http://code.alibabatech.com/schema/dubbo  
+            http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+   <!-- 提供方应用信息，用于计算依赖关系 -->
+	 <dubbo:application name="dubbo_provider"/>
+	<!-- 使用zookeeper注册中心暴露服务地址 -->
+	<dubbo:registry  address="127.0.0.1:2181" protocol="zookeeper"/>
+	 
+	<!-- 用dubbo协议在20880端口暴露服务 -->
+	<dubbo:protocol  name="dubbo" port="20880" />
+	 
+	<!-- 声明需要暴露的服务接口 -->
+    <dubbo:service interface="tyf.yhy.base.service.UserService" ref="userService" />
+	<dubbo:service interface="tyf.yhy.base.service.FamilyService" ref="familyService" />
+	<dubbo:service interface="tyf.yhy.base.service.FamilyMemberService" ref="familyMemberService" />
+	<bean id="userService" class="tyf.yhy.base.service.impl.UserServiceImpl">
+	</bean>
+		<bean id="familyService" class="tyf.yhy.base.service.impl.FamilyServiceImpl">
+	</bean>
+		<bean id="familyMemberService" class="tyf.yhy.base.service.impl.FamilyMemberServiceImpl">
+	</bean>
+</beans>

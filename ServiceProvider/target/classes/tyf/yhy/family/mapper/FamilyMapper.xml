@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tyf.yhy.family.mapper.FamilyMapper" >
+  <resultMap id="BaseResultMap" type="tyf.yhy.famliy.entity.Family" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="family_id" property="familyId" jdbcType="VARCHAR" />
+    <result column="family_name" property="familyName" jdbcType="VARCHAR" />
+    <result column="family_motto" property="familyMotto" jdbcType="VARCHAR" />
+    <result column="p_family_id1" property="pFamilyId1" jdbcType="CHAR" />
+    <result column="p_family_id2" property="pFamilyId2" jdbcType="VARCHAR" />
+    <result column="family_picture_src" property="familyPictureSrc" jdbcType="VARCHAR" />
+    <result column="family_create_time" property="timeCreate" jdbcType="VARCHAR" />
+    <result column="family_modified_time" property="timeModifed" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id,family_id, family_name, family_motto, p_family_id1, p_family_id2, family_picture_src,family_create_time, family_modified_time
+  </sql>
+  <select id="select" resultMap="BaseResultMap">
+       select 
+      <include refid="Base_Column_List" />
+       from family
+  </select>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="Integer">
+       select 
+      <include refid="Base_Column_List" />
+       from family where id = #{id}
+  </select>
+  <select id="selectByFamilyId" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from family
+    where family_id = #{familyId}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+     select 
+    <include refid="Base_Column_List" />
+    from family
+  </select>
+  <delete id="delete">
+    delete from family
+    where id in
+     <foreach collection="array" open="(" close=")" item="id" separator=",">
+                    #{id}
+     </foreach>
+      </delete>
+  <insert id="insert" parameterType="tyf.yhy.famliy.entity.Family" >
+    insert into family (family_id, family_name, family_motto, p_family_id1, p_family_id2,family_picture_src, family_create_time, family_modified_time)
+    values (#{familyId}, #{familyName}, #{familyMotto}, #{pFamilyId1}, #{pFamilyId2},#{familyPictureSrc},#{timeCreate},#{timeModifed})
+  </insert>
+  <update id="update" parameterType="tyf.yhy.famliy.entity.Family" >
+    update family
+    <set >
+        family_name=#{familyName},
+        family_motto=#{familyMotto},
+        family_modified_time=#{timeModifed}
+    </set>
+    where id = #{id}
+  </update>
+</mapper>

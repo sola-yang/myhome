@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tyf.yhy.family.mapper.FamilyMemberMapper" >
+  <resultMap id="BaseResultMap" type="tyf.yhy.famliy.entity.FamilyMember" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="family_member" property="familyMember" jdbcType="VARCHAR" />
+    <result column="family_id" property="familyId" jdbcType="VARCHAR" />
+    <result column="family_member_role" property="familyMemberRole" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id,family_member, family_id,family_member_role
+  </sql>
+  <select id="select" resultMap="BaseResultMap">
+       select 
+      <include refid="Base_Column_List" />
+       from family_member
+  </select>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="Integer">
+       select 
+      <include refid="Base_Column_List" />
+       from family_member where id = #{id}
+  </select>
+  <select id="selectByFamilyMember" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from family_member
+    where family_member = #{familyMember} and family_member!=family_id
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+     select 
+    <include refid="Base_Column_List" />
+    from family_member
+  </select>
+  <delete id="delete">
+    delete from family_member
+    where id in
+     <foreach collection="array" open="(" close=")" item="id" separator=",">
+                    #{id}
+     </foreach>
+      </delete>
+  <insert id="insert" parameterType="tyf.yhy.famliy.entity.FamilyMember" >
+    insert into family_member (family_member, family_id,family_member_role)
+    values ( #{familyMember},#{familyId},#{familyMemberRole})
+  </insert>
+  <update id="update" parameterType="tyf.yhy.famliy.entity.FamilyMember" >
+    update family_member
+    <set >
+        family_member=#{familyMember},
+        family_member_role=#{familyMemberRole}
+    </set>
+    where id = #{id}
+  </update>
+</mapper>
