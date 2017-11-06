@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.joda.time.DateTime;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -56,10 +57,19 @@ public class SystemUserController extends CDUContentController<User, UserService
 	@RequestMapping(value="/register",method=RequestMethod.POST)
 	protected String userRegister(UserForm form, BindingResult errors, Model model, HttpServletRequest request,
 			HttpServletResponse response){
+		
 		User user=form.toObj();
+		User exist=this.service.getUser(user.getUserId());
+		if(exist!=null&&exist.getUserId()!=null){
+			errors.addError(new ObjectError("errors", "the count has been registered!"));
+			model.addAttribute("errors",errors);
+			model.addAttribute("form", user);
+			model.addAttribute("sexMap",ConfigContext.sexMap);
+			return this.ADD_PAGE;
+		}
 		try {
 			this.service.save(user);
-		} catch (Exception e) {
+		}catch(Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
