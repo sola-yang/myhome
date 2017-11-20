@@ -1,5 +1,7 @@
 package tyf.yhy.base.service;
 
+import java.util.List;
+
 import tyf.yhy.famliy.entity.Family;
 
 /**
@@ -10,4 +12,6 @@ import tyf.yhy.famliy.entity.Family;
 */
 public interface FamilyService extends BaseService<Family> {
 	public Family getFamily(String familyId);
+	public List<Family> getFamilyPicture(String userId);
+	int updatePFamilyId(String pFamilyId,String familyId);
 }

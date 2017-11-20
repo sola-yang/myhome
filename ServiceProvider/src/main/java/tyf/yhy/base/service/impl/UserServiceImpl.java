@@ -42,11 +42,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int saveOrUpdate(User t) {
-		if(t.getId()==null){
-			return save(t);
-		}else{
-			return update(t);
-		}
+		return t.getId()!=null&&t.getId().intValue()>1?this.update(t):this.save(t);
 	}
 
 	@Override
@@ -56,7 +52,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> getByCondition(Paginator page) {
+	public List<User> getByCondition(Paginator<User> page) {
 		// TODO Auto-generated method stub
 		return userMapper.select(page);
 	}

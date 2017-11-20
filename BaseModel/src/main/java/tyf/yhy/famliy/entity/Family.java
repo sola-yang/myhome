@@ -21,6 +21,14 @@ public class Family extends Id implements Serializable{
       private String pFamilyId1;
       private String pFamilyId2;
       private String familyPictureSrc;
+      private String superPFamilyId;
+      
+	public String getSuperPFamilyId() {
+		return superPFamilyId;
+	}
+	public void setSuperPFamilyId(String superPFamilyId) {
+		this.superPFamilyId = superPFamilyId;
+	}
 	public String getFamilyPictureSrc() {
 		return familyPictureSrc;
 	}

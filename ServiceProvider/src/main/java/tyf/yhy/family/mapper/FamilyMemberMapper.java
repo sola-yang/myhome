@@ -12,4 +12,5 @@ import tyf.yhy.famliy.entity.FamilyMember;
 
 public interface FamilyMemberMapper extends BaseMapper<FamilyMember> {
 	public FamilyMember selectByFamilyMember(String familyMember);
+	public FamilyMember selectSuperPFamilyIdByFamilyMember(String familyMember);
 }

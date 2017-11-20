@@ -9,16 +9,22 @@
     <result column="p_family_id1" property="pFamilyId1" jdbcType="CHAR" />
     <result column="p_family_id2" property="pFamilyId2" jdbcType="VARCHAR" />
     <result column="family_picture_src" property="familyPictureSrc" jdbcType="VARCHAR" />
+    <result column="super_pfamily_id" property="superPFamilyId" jdbcType="VARCHAR" />
     <result column="family_create_time" property="timeCreate" jdbcType="VARCHAR" />
     <result column="family_modified_time" property="timeModifed" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id,family_id, family_name, family_motto, p_family_id1, p_family_id2, family_picture_src,family_create_time, family_modified_time
+    id,family_id, family_name, family_motto, p_family_id1, p_family_id2, family_picture_src,super_pfamily_id,family_create_time, family_modified_time
   </sql>
-  <select id="select" resultMap="BaseResultMap">
+  <select id="select" resultMap="BaseResultMap" parameterType="tyf.yhy.base.entity.Paginator">
        select 
       <include refid="Base_Column_List" />
-       from family
+       from family where family_id=#{query.familyId}
+  </select>
+    <select id="getFamilyPicture" resultMap="BaseResultMap" parameterType="String">
+       select 
+      <include refid="Base_Column_List" />
+       from family where family_id in(select family_id from family_member where family_member=#{userId})
   </select>
   <select id="selectById" resultMap="BaseResultMap" parameterType="Integer">
        select 
@@ -44,8 +50,8 @@
      </foreach>
       </delete>
   <insert id="insert" parameterType="tyf.yhy.famliy.entity.Family" >
-    insert into family (family_id, family_name, family_motto, p_family_id1, p_family_id2,family_picture_src, family_create_time, family_modified_time)
-    values (#{familyId}, #{familyName}, #{familyMotto}, #{pFamilyId1}, #{pFamilyId2},#{familyPictureSrc},#{timeCreate},#{timeModifed})
+    insert into family (family_id, family_name, family_motto, p_family_id1, p_family_id2,family_picture_src,super_pfamily_id, family_create_time, family_modified_time)
+    values (#{familyId}, #{familyName}, #{familyMotto}, #{pFamilyId1}, #{pFamilyId2},#{familyPictureSrc},#{superPFamilyId},#{timeCreate},#{timeModifed})
   </insert>
   <update id="update" parameterType="tyf.yhy.famliy.entity.Family" >
     update family
@@ -55,5 +61,20 @@
         family_modified_time=#{timeModifed}
     </set>
     where id = #{id}
+  </update>
+    <update id="updatePFamilyId" >
+    update family
+    <set >
+        <choose>
+          <when test="familyMemberRole=0">
+              p_family_id1=(select family_id from family_member where family_member=#{pFamilyId} and family_member_role=2),
+          </when>
+          <otherwise>
+             p_family_id2=(select family_id from family_member where family_member=#{pFamilyId} and family_member_role=2)
+          </otherwise>
+        </choose>
+        
+    </set>
+    where family_id = #{familyId}
   </update>
 </mapper>

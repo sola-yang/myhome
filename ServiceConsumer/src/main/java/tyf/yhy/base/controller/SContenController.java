@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import tyf.yhy.base.entity.Id;
 import tyf.yhy.base.entity.Paginator;
-import tyf.yhy.base.entity.Query;
 import tyf.yhy.base.service.BaseService;
 
 /**
@@ -22,7 +21,7 @@ import tyf.yhy.base.service.BaseService;
 *
 * 
 */
-public abstract class SContenController<T extends Id,S extends BaseService<T>,Q extends Query> {
+public abstract class SContenController<T extends Id,S extends BaseService<T>> {
 
 	protected final String RETURN_SCONTENT_PAGE;
 	protected S service;
@@ -30,13 +29,13 @@ public abstract class SContenController<T extends Id,S extends BaseService<T>,Q 
 		this.RETURN_SCONTENT_PAGE=String.format("/%s/show", model);
 	}
 	@RequestMapping({"/show"})
-	public String show(Q query,BindingResult errors,Model model, HttpServletRequest request, HttpServletResponse response){
+	public String show(T query,BindingResult errors,Model model, HttpServletRequest request, HttpServletResponse response){
 		int page =this.getPage(request);
-		return this.toShow(page, query, errors, model, request, response);
+		return this.toShow(page,query,errors, model, request, response);
 	}
 	@RequestMapping({"/show/{page}"})
-	public String show(@PathVariable("page")int page,Q query,BindingResult errors,Model model, HttpServletRequest request, HttpServletResponse response){
-		return this.toShow(page, query, errors, model, request, response);
+	public String show(@PathVariable("page")int page,T query,BindingResult errors,Model model, HttpServletRequest request, HttpServletResponse response){
+		return this.toShow(page,query, errors, model, request, response);
 	}
 	protected int getPage(HttpServletRequest request){
 		String page =request.getParameter("page");
@@ -51,9 +50,9 @@ public abstract class SContenController<T extends Id,S extends BaseService<T>,Q 
 		}
 		
 	}
-	protected String toShow(int page,Q query,BindingResult errors,Model model, HttpServletRequest request, HttpServletResponse response){
+	protected String toShow(int page,T query,BindingResult errors,Model model, HttpServletRequest request, HttpServletResponse response){
 		
-		Paginator paginator=this.getPaginator(page, query);
+		Paginator<T> paginator=this.getPaginator(page,query);
 		boolean toShowDataOrNot=this.preShow(page, paginator, query, model, request, response);
 		List<T> datas=Collections.emptyList();
 		if (toShowDataOrNot) {
@@ -64,12 +63,12 @@ public abstract class SContenController<T extends Id,S extends BaseService<T>,Q 
 		model.addAttribute("hasDatas",datas!=null&&!datas.isEmpty());
 		return this.RETURN_SCONTENT_PAGE;
 	}
-	protected Paginator getPaginator(int page,Q query){
-		Paginator paginator=new Paginator(page);
+	protected Paginator<T> getPaginator(int page,T query){
+		Paginator<T> paginator=new Paginator<T>(page);
 		paginator.setQuery(query);
 		return paginator;
 	}
-	protected boolean preShow(int page,Paginator paginator,Q query,Model model, HttpServletRequest request, HttpServletResponse response){
+	protected boolean preShow(int page,Paginator<T> paginator,T query,Model model, HttpServletRequest request, HttpServletResponse response){
 		return true;
 	}
 }

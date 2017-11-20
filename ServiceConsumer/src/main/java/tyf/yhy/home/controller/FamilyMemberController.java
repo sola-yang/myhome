@@ -5,14 +5,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import tyf.yhy.base.controller.CDUContentController;
 import tyf.yhy.base.entity.IdForm;
-import tyf.yhy.base.entity.Paginator;
 import tyf.yhy.base.entity.Query;
 import tyf.yhy.base.service.FamilyMemberService;
 import tyf.yhy.base.service.FamilyService;
@@ -29,7 +27,7 @@ import tyf.yhy.util.LoginContext;
 */
 @Controller
 @RequestMapping("/familymember")
-public class FamilyMemberController extends CDUContentController<FamilyMember,FamilyMemberService, FamilyMemberController.FamilyMemberForm,FamilyMemberController.FamilyMemberQuery> {
+public class FamilyMemberController extends CDUContentController<FamilyMember,FamilyMemberService, FamilyMemberController.FamilyMemberForm> {
 
 	public FamilyMemberController() {
 		super("familymember");
@@ -50,29 +48,41 @@ public class FamilyMemberController extends CDUContentController<FamilyMember,Fa
 		// TODO Auto-generated method stub
 		FamilyMember familyMember=form.toObj();
 		Family family =familyService.getFamily(LoginContext.getLoginUser().getUser().getUserId());
+		if(familyMember.getFamilyMemberRole()!='2'){
+			familyService.updatePFamilyId(familyMember.getFamilyMember(),family.getFamilyId());
+		}
 		familyMember.setFamilyId(family.getFamilyId());
+		familyMember.setSuperPFamilyId(family.getSuperPFamilyId());
 		this.service.saveOrUpdate(familyMember);
 		
 	}
 	@Override
-	protected String toShow(int page, FamilyMemberQuery query, BindingResult errors, Model model,
+	protected String toShow(int page, FamilyMember query, BindingResult errors, Model model,
 			HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
+		query.setFamilyId(LoginContext.getLoginUser().getUser().getUserId());
 		model.addAttribute("familyRoleMap", ConfigContext.familyRoleMap);
 		return super.toShow(page, query, errors, model, request, response);
 	}
-	public static class FamilyMemberQuery extends Query{
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-		
+	@Override
+	protected void postupdateData(int id, FamilyMember obj, Model model) {
+		// TODO Auto-generated method stub
+		model.addAttribute("familyRoleMap", ConfigContext.familyRoleMap);
+		super.postupdateData(id, obj, model);
 	}
 	public static class FamilyMemberForm extends IdForm<FamilyMember>{
 		private String familyMember;
 		private String familyId;
-		private Integer familyMemberRole;
+		private char familyMemberRole;
+		private String superPFamilyId;
+		public String getSuperPFamilyId() {
+			return superPFamilyId;
+		}
+
+		public void setSuperPFamilyId(String superPFamilyId) {
+			this.superPFamilyId = superPFamilyId;
+		}
+
 		public String getFamilyMember() {
 			return familyMember;
 		}
@@ -89,11 +99,11 @@ public class FamilyMemberController extends CDUContentController<FamilyMember,Fa
 			this.familyId = familyId;
 		}
 
-		public Integer getFamilyMemberRole() {
+		public char getFamilyMemberRole() {
 			return familyMemberRole;
 		}
 
-		public void setFamilyMemberRole(Integer familyMemberRole) {
+		public void setFamilyMemberRole(char familyMemberRole) {
 			this.familyMemberRole = familyMemberRole;
 		}
 
@@ -109,6 +119,7 @@ public class FamilyMemberController extends CDUContentController<FamilyMember,Fa
 			t.setFamilyId(familyId);
 			t.setFamilyMember(familyMember);
 			t.setFamilyMemberRole(familyMemberRole);
+			t.setSuperPFamilyId(superPFamilyId);
 		}
 		
 	}

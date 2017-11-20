@@ -59,7 +59,7 @@ public class FamilyServiceImpl implements FamilyService {
 	}
 
 	@Override
-	public List<Family> getByCondition(Paginator page) {
+	public List<Family> getByCondition(Paginator<Family> page) {
 		// TODO Auto-generated method stub
 		return familyMapper.select(page);
 	}
@@ -68,6 +68,18 @@ public class FamilyServiceImpl implements FamilyService {
 	public int deleteByIds(int[] ids) {
 		// TODO Auto-generated method stub
 		return familyMapper.delete(ids);
+	}
+
+	@Override
+	public List<Family> getFamilyPicture(String userId) {
+		// TODO Auto-generated method stub
+		return familyMapper.getFamilyPicture(userId);
+	}
+
+	@Override
+	public int updatePFamilyId(String pFamilyId, String familyId) {
+		// TODO Auto-generated method stub
+		return familyMapper.updatePFamilyId(pFamilyId, familyId);
 	}
 
 

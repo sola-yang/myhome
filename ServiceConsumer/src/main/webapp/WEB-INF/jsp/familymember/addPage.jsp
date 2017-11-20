@@ -21,7 +21,7 @@
 		<label class="col-sm-2 control-label" for="familyName">Family Member ID</label>
 		<div class="col-sm-10">
 			<input type="text" class="form-control" id="familyMember" name="familyMember" maxlength="32" value="${update.familyMember } " 
-			   required oninvalid="setCustomValidity('please enter familyMemberId');" oninput="setCustomValidity('');"
+			   required oninvalid="setCustomValidity('please enter familyMember');" oninput="setCustomValidity('');"
 			   placeholder="familyMemberId">
 		</div>
 	   </div>
@@ -30,7 +30,7 @@
 		<div class="col-sm-10">
 			<select class="form-control" id="familyMemberRole" name="familyMemberRole" >
 			  <c:forEach items="${familyRoleMap }" var="role">
-			    <option value="${role.key }" ${update.familyMemberId==role.key?"selected":""}>${role.value}</option>
+			    <option value="${role.key }" ${update.familyMemberRole==role.key?"selected":""}>${role.value}</option>
 			  </c:forEach>
 		    </select>
 		</div>

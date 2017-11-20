@@ -64,9 +64,8 @@
 	   	   <div class="form-group">
 		<label class="col-sm-2 control-label" for="phone">phone</label>
 		<div class="col-sm-10">
-			 <input type="number" class="form-control"   id="phone" name="phoneNum" pattern="^1[3|4|5|8][0-9]\d{4,8}$ " value="${form.phoneNum }"
-			   title="please enter correct phone number!"
-			   required oninvalid="setCustomValidity('please enter correct phone number!');" oninput="setCustomValidity('');"
+			 <input type="text" class="form-control"   id="phone" name="phoneNum" pattern="^1[3|4|5|8][0-9]\d{8}$" value="${form.phoneNum }"
+			    required oninvalid="setCustomValidity('please enter correct phone number!');" oninput="setCustomValidity('');"
 			   placeholder="phone">
 		</div>
 	   </div>
@@ -81,7 +80,7 @@
 	   	   <div class="form-group">
 		<label class="col-sm-2 control-label" for="qq">qq</label>
 		<div class="col-sm-10">
-			 <input type="number" class="form-control" id="qq" name="qqCount" maxlength="16" value="${form.qqCount }"
+			 <input type="text" class="form-control" id="qq" name="qqCount" maxlength="12" pattern="\d{6,12}$" value="${form.qqCount }"
 				required oninvalid="setCustomValidity('please enter correct qq number!');" oninput="setCustomValidity('');"
 			   placeholder="qq">
 		</div>
@@ -89,7 +88,7 @@
 	   	   <div class="form-group">
 		<label class="col-sm-2 control-label" for="wechart">wechart</label>
 		<div class="col-sm-10">
-			 <input type="text" class="form-control" id="wechart" name="weChartCount" maxlength="16" value="${form.weChartCount }"
+			 <input type="text" class="form-control" id="wechart" name="weChartCount" maxlength="16"  pattern="\d{6,16}$"value="${form.weChartCount }"
 			  required oninvalid="setCustomValidity('please enter correct wechart number!');" oninput="setCustomValidity('');"
 			   placeholder="wechart">
 		</div>
@@ -114,7 +113,7 @@
 	   <div class="form-group" align="center"><button type=submit class="btn btn-primary" >submit</button></div>
        </form>
     </div>
-    <div style="width: 50%;height:100%;float:left;;padding-top:10%" align="center"><img src="<%=request.getContextPath()%>/image/home.jpg" style="width: 80%;height:100%;"></div>
+    <div style="width: 50%;height:100%;float:left;;padding-top:10%" align="center"><img src="http://127.0.0.1/tools/home.jpg" style="width: 80%;height:100%;"></div>
   </div>
 </div>
 </body>

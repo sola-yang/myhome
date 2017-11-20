@@ -17,6 +17,6 @@ public interface BaseService<T extends Id>  {
 	public int update(T t);
 	public int saveOrUpdate(T t);
 	public List<T> getAll();
-	public List<T> getByCondition(Paginator page);
+	public List<T> getByCondition(Paginator<T> page);
 	public int deleteByIds(int ids[]);
 }

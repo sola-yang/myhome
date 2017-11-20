@@ -8,11 +8,11 @@ import java.io.Serializable;
 *paging for table
 * 
 */
-public class Paginator implements Serializable{
+public class Paginator<Q extends Id> implements Serializable{
        /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 11L;
 	public  static final int DEFAULT_SIZE=20;
 	   private int start;
 	   private int size;
@@ -24,7 +24,7 @@ public class Paginator implements Serializable{
    	   private boolean hasData;
        private boolean pageless;
    	   private String path;
-   	   private Query query;
+   	   private Q query;
    	   private Object attachment;
    	   public Paginator(int page){
    		   this.page=page;
@@ -104,10 +104,10 @@ public class Paginator implements Serializable{
 	public void setPath(String path) {
 		this.path = path;
 	}
-	public Query getQuery() {
+	public Q getQuery() {
 		return query;
 	}
-	public void setQuery(Query query) {
+	public void setQuery(Q query) {
 		this.query = query;
 	}
 	public Object getAttachment() {

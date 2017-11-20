@@ -18,6 +18,13 @@ public class FamilyMember extends Id {
 	private String familyMember;
 	private String familyId;
 	private char familyMemberRole;//0 represent father 1 represent mother 2 represent child
+	private String superPFamilyId;
+	public String getSuperPFamilyId() {
+		return superPFamilyId;
+	}
+	public void setSuperPFamilyId(String superPFamilyId) {
+		this.superPFamilyId = superPFamilyId;
+	}
 	public char getFamilyMemberRole() {
 		return familyMemberRole;
 	}

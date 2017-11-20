@@ -4,10 +4,10 @@
 <head>
 
 </head>
-<body>
+<body >
 <div style="background-color: #003333;float:left;width: 100%">
 <div style="background-color: #003333;float:left;width:100%">
-<ul class="nav nav-pills pull-right">
+<ul class="nav nav-pills pull-right" >
   <c:choose>
      <c:when test="<%=LoginContext.checkLogin(session) %>">
 	      <li><a href="#"><%=LoginContext.getLoginUser().getUser().getUserName()%>&nbsp;&nbsp;&nbsp;&nbsp;welcome to your home!</a></li>

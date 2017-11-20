@@ -10,4 +10,6 @@ import tyf.yhy.famliy.entity.FamilyMember;
 */
 public interface FamilyMemberService extends BaseService<FamilyMember> {
        public FamilyMember getFamilyMember(String familyMember);
+       public FamilyMember getSuperPFamilyIdByFamilyMember(String familyMember);
+       
 }

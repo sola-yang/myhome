@@ -6,7 +6,7 @@
             http://www.springframework.org/schema/beans/spring-beans.xsd  
             http://code.alibabatech.com/schema/dubbo  
             http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
-   <!-- 提供方应用信息，用于计算依赖关系 -->
+    <!-- 提供方应用信息，用于计算依赖关系 -->
 	 <dubbo:application name="dubbo_provider"/>
 	<!-- 使用zookeeper注册中心暴露服务地址 -->
 	<dubbo:registry  address="127.0.0.1:2181" protocol="zookeeper"/>
@@ -18,10 +18,19 @@
     <dubbo:service interface="tyf.yhy.base.service.UserService" ref="userService" />
 	<dubbo:service interface="tyf.yhy.base.service.FamilyService" ref="familyService" />
 	<dubbo:service interface="tyf.yhy.base.service.FamilyMemberService" ref="familyMemberService" />
+	<dubbo:service interface="tyf.yhy.base.service.FamilyShareService" ref="familyShareService" />
+	<dubbo:service interface="tyf.yhy.base.service.FamilyCommentService" ref="familyCommentService" />
+	<dubbo:service interface="tyf.yhy.base.service.FamilyReplyService" ref="familyReplyService" />
 	<bean id="userService" class="tyf.yhy.base.service.impl.UserServiceImpl">
 	</bean>
 		<bean id="familyService" class="tyf.yhy.base.service.impl.FamilyServiceImpl">
 	</bean>
 		<bean id="familyMemberService" class="tyf.yhy.base.service.impl.FamilyMemberServiceImpl">
+	</bean>
+	<bean id="familyShareService" class="tyf.yhy.base.service.impl.FamilyShareServiceImpl">
+	</bean>
+		<bean id="familyCommentService" class="tyf.yhy.base.service.impl.FamilyCommentServiceImpl">
+	</bean>
+		<bean id="familyReplyService" class="tyf.yhy.base.service.impl.FamilyReplyServiceImpl">
 	</bean>
 </beans>

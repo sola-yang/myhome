@@ -13,4 +13,7 @@
 <dubbo:reference id="userService" interface="tyf.yhy.base.service.UserService" check="false" timeout="60000"/>
 <dubbo:reference id="familyService" interface="tyf.yhy.base.service.FamilyService" check="false" timeout="60000"/>
 <dubbo:reference id="familyMemberService" interface="tyf.yhy.base.service.FamilyMemberService" check="false" timeout="60000"/>
+<dubbo:reference id="familyShareService" interface="tyf.yhy.base.service.FamilyShareService" check="false" timeout="60000"/>
+<dubbo:reference id="familyCommentService" interface="tyf.yhy.base.service.FamilyCommentService" check="false" timeout="60000"/>
+<dubbo:reference id="familyReplyService" interface="tyf.yhy.base.service.FamilyReplyService" check="false" timeout="60000"/>
 </beans>

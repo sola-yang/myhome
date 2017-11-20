@@ -53,7 +53,7 @@ public class FamilyMemberServiceImpl implements FamilyMemberService {
 	}
 
 	@Override
-	public List<FamilyMember> getByCondition(Paginator page) {
+	public List<FamilyMember> getByCondition(Paginator<FamilyMember> page) {
 		// TODO Auto-generated method stub
 		return familyMemberMapper.select(page);
 	}
@@ -68,6 +68,12 @@ public class FamilyMemberServiceImpl implements FamilyMemberService {
 	public FamilyMember getFamilyMember(String familyMember) {
 		// TODO Auto-generated method stub
 		return familyMemberMapper.selectByFamilyMember(familyMember);
+	}
+
+	@Override
+	public FamilyMember getSuperPFamilyIdByFamilyMember(String familyMember) {
+		// TODO Auto-generated method stub
+		return familyMemberMapper.selectSuperPFamilyIdByFamilyMember(familyMember);
 	}
 
 

@@ -24,7 +24,7 @@ import tyf.yhy.util.SecurityUtils;
 */
 @Controller()
 @RequestMapping("/myhome")
-public class UserController extends CDUContentController<User, BaseService<User>,UserController.UserForm, UserController.UserQuery>{
+public class UserController extends CDUContentController<User, BaseService<User>,UserController.UserForm>{
 
 	public UserController() {
 		super("myhome");
@@ -159,72 +159,6 @@ public class UserController extends CDUContentController<User, BaseService<User>
 		}
 		
 	}
-    public static class UserQuery extends Query{
-    	private String userId;
-    	private String userName;
-    	private char sex;//0 represent man 1 represent woman
-    	private String phoneNum;
-    	private String address;
-    	private String email;
-    	private String qqCount;
-    	private String weChartCount;
-		public String getUserId() {
-			return userId;
-		}
-		public void setUserId(String userId) {
-			this.userId = userId;
-			this.addItems("suerId", this.userId);
-		}
-		public String getUserName() {
-			return userName;
-		}
-		public void setUserName(String userName) {
-			this.userName = userName;
-			this.addItems("userName", this.userName);
-		}
-		public char getSex() {
-			return sex;
-		}
-		public void setSex(char sex) {
-			this.sex = sex;
-			this.addItems("sex", this.sex);
-		}
-		public String getPhoneNum() {
-			return phoneNum;
-		}
-		public void setPhoneNum(String phoneNum) {
-			this.phoneNum = phoneNum;
-			this.addItems("phoneNum", this.phoneNum);
-		}
-		public String getAddress() {
-			return address;
-		}
-		public void setAddress(String address) {
-			this.address = address;
-			this.addItems("address", this.address);
-		}
-		public String getEmail() {
-			return email;
-		}
-		public void setEmail(String email) {
-			this.email = email;
-			this.addItems("email", this.email);
-		}
-		public String getQqCount() {
-			return qqCount;
-		}
-		public void setQqCount(String qqCount) {
-			this.qqCount = qqCount;
-			this.addItems("qqCount", this.qqCount);
-		}
-		public String getWeChartCount() {
-			return weChartCount;
-		}
-		public void setWeChartCount(String weChartCount) {
-			this.weChartCount = weChartCount;
-			this.addItems("weChartCount", this.weChartCount);
-		}
     	
-    }
 	
 }

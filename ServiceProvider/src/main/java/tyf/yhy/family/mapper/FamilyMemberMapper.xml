@@ -6,14 +6,15 @@
     <result column="family_member" property="familyMember" jdbcType="VARCHAR" />
     <result column="family_id" property="familyId" jdbcType="VARCHAR" />
     <result column="family_member_role" property="familyMemberRole" jdbcType="CHAR" />
+    <result column="super_pfamily_id" property="superPFamilyId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id,family_member, family_id,family_member_role
+    id,family_member, family_id,family_member_role,super_pfamily_id
   </sql>
-  <select id="select" resultMap="BaseResultMap">
+  <select id="select" resultMap="BaseResultMap" parameterType="tyf.yhy.base.entity.Paginator">
        select 
       <include refid="Base_Column_List" />
-       from family_member
+       from family_member where family_id=#{query.familyId}
   </select>
   <select id="selectById" resultMap="BaseResultMap" parameterType="Integer">
        select 
@@ -25,6 +26,12 @@
     <include refid="Base_Column_List" />
     from family_member
     where family_member = #{familyMember} and family_member!=family_id
+  </select>
+  <select id="selectSuperPFamilyIdByFamilyMember" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    distinct id,family_member, family_id,family_member_role,super_pfamily_id
+    from family_member
+    where family_member = #{familyMember} 
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
      select 
@@ -39,8 +46,8 @@
      </foreach>
       </delete>
   <insert id="insert" parameterType="tyf.yhy.famliy.entity.FamilyMember" >
-    insert into family_member (family_member, family_id,family_member_role)
-    values ( #{familyMember},#{familyId},#{familyMemberRole})
+    insert into family_member (family_member, family_id,family_member_role,super_pfamily_id)
+    values ( #{familyMember},#{familyId},#{familyMemberRole},#{superPFamilyId})
   </insert>
   <update id="update" parameterType="tyf.yhy.famliy.entity.FamilyMember" >
     update family_member

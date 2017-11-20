@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import tyf.yhy.base.controller.CDUContentController;
 import tyf.yhy.base.entity.IdForm;
+import tyf.yhy.base.entity.Paginator;
 import tyf.yhy.base.entity.Query;
 import tyf.yhy.base.service.FamilyMemberService;
 import tyf.yhy.base.service.FamilyService;
@@ -35,7 +37,7 @@ import tyf.yhy.util.LoginContext;
 */
 @Controller
 @RequestMapping("/family")
-public class FamilyController extends CDUContentController<Family,FamilyService, FamilyController.FamilyForm, FamilyController.FamilyQuery> {
+public class FamilyController extends CDUContentController<Family,FamilyService, FamilyController.FamilyForm> {
 
 	public FamilyController() {
 		super("family");
@@ -56,51 +58,38 @@ public class FamilyController extends CDUContentController<Family,FamilyService,
 		family.setFamilyId(LoginContext.getLoginUser().getUser().getUserId());
 		FamilyMember member=familyMemberService.getFamilyMember(family.getFamilyId());
 		if(form.getFile()!=null&&form.getFile().getOriginalFilename()!=null&&!form.getFile().getOriginalFilename().trim().equals("")){
-			String filePath="/image/family/"+form.getFile().getOriginalFilename();
-			saveFile(form.getFile(),request.getRealPath(filePath));
+			String filePath="/image/family/"+form.getFamilyId()+form.getFile().getOriginalFilename();
+			saveFile(form.getFile(),request.getSession().getServletContext().getRealPath(filePath));
 			family.setFamilyPictureSrc(filePath);
 		}
-		family.setpFamilyId1(member.getFamilyId()==null?"":member.getFamilyId());
+		family.setSuperPFamilyId(member==null?family.getFamilyId():member.getSuperPFamilyId());
 		this.service.saveOrUpdate(family);
 		
 	}
-	public static class FamilyQuery extends Query{
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-		
+	@Override
+	protected boolean preShow(int page, Paginator<Family> paginator, Family query, Model model,
+			HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		query.setFamilyId(LoginContext.getLoginUser().getUser().getUserId());
+		return super.preShow(page, paginator, query, model, request, response);
 	}
-	
-	public static void saveFile(MultipartFile file,String filePath){
-		if(file!=null){
-			InputStream input=null;
-			OutputStream out=null;
-			File fielPath=new File(filePath);
-			try {
-				if(!fielPath.exists()){
-					fielPath.createNewFile();
-				}
-				input=file.getInputStream();
-				out=new FileOutputStream(fielPath);
-				byte b[]=new byte[input.available()];
-				input.read(b);
-				out.write(b);
-				out.flush();
-			} catch (IOException e) {
-			}finally {
-					try {
-						if(out!=null){
-							out.close();
-						}
-						if(input!=null){
-							input.close();
-						}
-					} catch (IOException e) {
-					}
-			}
+	@RequestMapping("/familypicture")
+	protected String showFamilyPicture(Model model){
+		String userId=LoginContext.getLoginUser().getUser().getUserId();
+		List<Family> list=this.service.getFamilyPicture(userId);
+		model.addAttribute("datas", list);
+		model.addAttribute("hasDatas", list.size()>0);
+		return "/family/familypicture";
+	}
+ 	public static void saveFile(MultipartFile file,String filePath){
+ 		if (!file.isEmpty()) {  
+ 		try {
+			file.transferTo(new File(filePath));
+		} catch (IllegalStateException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+ 		}
 	}
 	public static class FamilyForm extends IdForm<Family>{
 	    private String familyId;

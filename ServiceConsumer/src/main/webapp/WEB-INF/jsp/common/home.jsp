@@ -8,13 +8,13 @@
 <title>home!</title>
 </head>
 <body>
-  <ul class="nav nav-tabs">
-  <li class="${_myHome}"><a href="${basePath }/myhome/home">My Home</a></li>
+  <ul class="nav nav-tabs" >
+  <li class="${_myHome}"><a href="${basePath }/family/familypicture">My Home</a></li>
   <li class="${_homeTree}"><a href="${basePath }/myhome/hometree">Home Tree</a></li>
   <li class="${_homeMember}"><a href="${basePath }/myhome/homemember">Home Member</a></li>
   <li class="${_myPlace}"><a href="${basePath }/myhome/myplace">My Place</a></li>
   <li class="${_homeManagement}"><a href="${basePath }/myhome/homemanagement">Home Management</a></li>
-  <li class="${_familyManagement}"><a href="${basePath }/family/show">starting a family</a></li>
-</ul>
+  <li class="${_familyManagement}"><a href="${basePath }/family/show">Starting A Family</a></li>
+ </ul>
 </body>
 </html>

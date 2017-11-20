@@ -13,7 +13,6 @@ import com.google.common.base.Strings;
 
 import tyf.yhy.base.entity.Id;
 import tyf.yhy.base.entity.IdForm;
-import tyf.yhy.base.entity.Query;
 import tyf.yhy.base.service.BaseService;
 import tyf.yhy.util.Ids;
 
@@ -23,7 +22,7 @@ import tyf.yhy.util.Ids;
 *
 * 
 */
-public abstract class CDUContentController<T extends Id,S extends BaseService<T>,F extends IdForm<T>,Q extends Query> extends SContenController<T, S, Q>{
+public abstract class CDUContentController<T extends Id,S extends BaseService<T>,F extends IdForm<T>> extends SContenController<T, S>{
 
 	protected final String ADD_PAGE;
 	protected final String REDIRECT_PAGE;
@@ -52,7 +51,10 @@ public abstract class CDUContentController<T extends Id,S extends BaseService<T>
 		}
 		
 	}
-	protected abstract void toSave(F form,BindingResult errors,Model model,HttpServletRequest request,HttpServletResponse response);
+	protected  void toSave(F form,BindingResult errors,Model model,HttpServletRequest request,HttpServletResponse response){
+		T t=form.toObj();
+		this.service.save(t);
+	};
 	protected void postAddData(Model model){
 		
 	}
