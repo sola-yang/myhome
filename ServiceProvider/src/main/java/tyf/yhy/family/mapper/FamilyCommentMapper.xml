@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tyf.yhy.family.mapper.FamilyCommentMapper" >
+  <resultMap id="BaseResultMap" type="tyf.yhy.familyshare.entity.FamilyComment" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="comment_id" property="commentId" jdbcType="VARCHAR" />
+    <result column="share_id" property="shareId" jdbcType="VARCHAR" />
+    <result column="comment_content" property="commentContent" jdbcType="VARCHAR" />
+    <result column="comment_user" property="userId" jdbcType="VARCHAR" />
+    <result column="comment_time" property="timeCreate" jdbcType="VARCHAR" />
+    <collection property="reply" ofType="tyf.yhy.familyshare.entity.FamilyReply" column="comment_id" select="getReply"></collection>
+  </resultMap>
+   <select id="select" resultMap="BaseResultMap" parameterType="tyf.yhy.base.entity.Paginator">
+       select * from family_comment where share_id ==#{query.shareId})
+  </select>
+  <select id="getReply" resultType="tyf.yhy.familyshare.entity.FamilyReply" parameterType="String">
+       select *
+       from family_reply where comment_id = #{commentId}
+  </select>
+  <delete id="deleteByCommentId">
+    delete from family_comment
+    where comment_id =#{commentId}
+      </delete>
+  <insert id="insert" parameterType="tyf.yhy.famliy.entity.Family" >
+    insert into family_comment (comment_id, share_id, comment_content, comment_user, comment_time)
+    values (#{commentId}, #{shareId}, #{commentContent}, #{userId},#{timeCreate})
+  </insert>
+</mapper>

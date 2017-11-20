@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tyf.yhy.family.mapper.FamilyShareMapper" >
+  <resultMap id="BaseResultMap" type="tyf.yhy.familyshare.entity.FamilyShare" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="share_id" property="shareId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="share_content" property="shareContent" jdbcType="VARCHAR" />
+    <result column="share_src" property="shareSrc" jdbcType="VARCHAR" />
+    <result column="family_id" property="familyId" jdbcType="VARCHAR" />
+    <result column="share_time" property="timeCreate" jdbcType="VARCHAR" />
+    <collection property="comment" ofType="tyf.yhy.familyshare.entity.FamilyComment" column="share_id" select="getComment">
+    <collection property="reply" ofType="tyf.yhy.familyshare.entity.FamilyReply" column="comment_id"  select="getReply"></collection>
+    </collection>
+  </resultMap>
+   <resultMap id="CommentResultMap" type="tyf.yhy.familyshare.entity.FamilyComment" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="comment_id" property="commentId" jdbcType="VARCHAR" />
+    <result column="share_id" property="shareId" jdbcType="VARCHAR" />
+    <result column="comment_content" property="commentContent" jdbcType="VARCHAR" />
+    <result column="comment_user" property="userId" jdbcType="VARCHAR" />
+    <result column="comment_time" property="timeCreate" jdbcType="VARCHAR" />
+    <collection property="reply" ofType="tyf.yhy.familyshare.entity.FamilyReply" column="comment_id" select="getReply"></collection>
+  </resultMap>
+    <resultMap id="ReplyResultMap" type="tyf.yhy.familyshare.entity.FamilyReply" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="reply_id" property="replyId" jdbcType="VARCHAR" />
+    <result column="comment_id" property="commentId" jdbcType="VARCHAR" />
+    <result column="reply_content" property="replyContent" jdbcType="VARCHAR" />
+    <result column="from_user" property="fromUser" jdbcType="VARCHAR" />
+    <result column="to_user" property="toUser" jdbcType="VARCHAR" />
+    <result column="reply_time" property="timeCreate" jdbcType="VARCHAR" />
+  </resultMap>
+   <select id="select" resultMap="BaseResultMap" parameterType="tyf.yhy.base.entity.Paginator">
+       select * from family_share where family_id in (select distinct family_id from family_member where super_pfamily_id=#{query.familyId})
+  </select>
+    <select id="getComment" resultMap="CommentResultMap" parameterType="String">
+       select *
+       from family_comment where share_id=#{shareId}
+  </select>
+  <select id="getReply" resultMap="ReplyResultMap" parameterType="String">
+       select *
+       from family_reply where comment_id = #{commentId}
+  </select>
+  <delete id="deleteShareId">
+    delete from family_share
+    where share_id =#{shareId}
+      </delete>
+  <insert id="insert" parameterType="tyf.yhy.famliy.entity.Family" >
+    insert into family_share (share_id, user_id,share_content, share_src, family_id, share_time)
+    values (#{shareId},#{userId}, #{shareContent}, #{shareSrc}, #{familyId},#{timeCreate})
+  </insert>
+</mapper>
